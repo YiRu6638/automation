@@ -16,6 +16,22 @@ placeholders = (
     "{{TIN number}}"
 )
 
+# Replace placeholder text while preserving formatting
+def replace_placeholder(doc, placeholder, replacement):
+    for paragraph in doc.paragraphs:
+        for run in paragraph.runs:
+            if placeholder in run.text:
+                run.text = run.text.replace(placeholder, replacement)
+    
+    # Replace placeholders in tables (if needed)
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for paragraph in cell.paragraphs:
+                    for run in paragraph.runs:
+                        run.text = run.text.replace(placeholder, replacement)
+                        run.font.name = 'Georgia'
+
 if __name__ == "__main__":
     # Replace placeholders in the document
     for row in range(3, data_sheet.max_row + 1):
@@ -23,18 +39,9 @@ if __name__ == "__main__":
         
         doc = Document(template_path)
         
-        for paragraph in doc.paragraphs:
-            paragraph.text = paragraph.text.replace("{{name}}", row_data[1])
-            paragraph.text = paragraph.text.replace("{{TIN number}}", row_data[0])
-                    
-        # Replace placeholders in tables (if needed)
-        for table in doc.tables:
-            for row in table.rows:
-                for cell in row.cells:
-                    cell.text = cell.text.replace("{{name}}", row_data[1])
-                    cell.text = cell.text.replace("{{TIN number}}", row_data[0])
+        replace_placeholder(doc, "{{name}}", row_data[1])
+        replace_placeholder(doc, "{{TIN number}}", row_data[0])
 
-        new_filepath = os.path.join(script_dir, "coa", row_data[1] + "_ConfirmationOfAgreementToTheTaxReturn.docx")
-        # Save the modified document
+        new_filepath = os.path.join(script_dir, "coa", row_data[1] + "_CoA_YA2024.docx")
         doc.save(new_filepath)
         print(f"Document saved to {new_filepath}")
