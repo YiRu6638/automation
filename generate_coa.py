@@ -5,7 +5,7 @@ import openpyxl
 # Define the paths
 script_dir = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join(script_dir, "output", "output-record.xlsx")
-template_path = os.path.join(script_dir, "template", "EmployeeName_ConfirmationOfAgreementToTheTaxReturn.docx")
+template_path = os.path.join(script_dir, "template", "EmployeeName_CoA_YA2024.docx")
 
 data = openpyxl.load_workbook(data_path)
 data_sheet = data.active
