@@ -31,9 +31,9 @@ def generate_tax_comp():
             template_sheet['E22'] = row_data[11]
             template_sheet['E23'] = row_data[12]
             template_sheet['E24'] = row_data[13]
-            template_sheet['E27'] = row_data[25]
-            template_sheet['E39'] = row_data[18]
-            template_sheet['E42'] = row_data[17] * -1
+            template_sheet['E27'] = row_data[25] * -1 if row_data[25] else 0
+            template_sheet['E39'] = row_data[18] * -1 if row_data[18] else 0
+            template_sheet['E42'] = row_data[17] * -1 if row_data[17] else 0
             
             new_filepath = os.path.join(script_dir, "tax_comps", row_data[1] + "_PersonalIncomeTaxComputation_YA2024.xlsx")
             template_workbook.save(new_filepath)
@@ -54,8 +54,8 @@ def generate_tax_comp():
             template_sheet['E22'] = row_data[11]
             template_sheet['E23'] = row_data[12]
             template_sheet['E24'] = row_data[13]
-            template_sheet['E32'] = row_data[18]
-            template_sheet['E35'] = row_data[17] * -1
+            template_sheet['E32'] = row_data[18] * -1 if row_data[18] else 0
+            template_sheet['E35'] = row_data[17] * -1 if row_data[17] else 0
 
             new_filepath = os.path.join(script_dir, "tax_comps", row_data[1] + "_PersonalIncomeTaxComputation_YA2024_Non-resident.xlsx")
             template_workbook.save(new_filepath)
