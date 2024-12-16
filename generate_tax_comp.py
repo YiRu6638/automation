@@ -16,7 +16,7 @@ def generate_tax_comp():
 
         if row_data[21] == 'R':
             template_workbook = openpyxl.load_workbook(template_path)
-            template_sheet = template_workbook.active
+            template_sheet = template_workbook["Tax Comp"]
             
             template_sheet['C4'] = row_data[1]
             template_sheet['C5'] = row_data[0]
