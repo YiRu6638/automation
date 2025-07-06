@@ -85,4 +85,4 @@ def alternative_pdf_extraction_method():
 if __name__ == "__main__":
     mass_convert_pdf_to_img("dummy_pdf", "dummy_img")
     mass_convert_img_to_text("dummy_img", "dummy_text")
-    matching.extract_text_to_excel("dummy_text")
+    # matching.extract_text_to_excel("dummy_text")
