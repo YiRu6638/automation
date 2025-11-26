@@ -2,11 +2,15 @@ import openpyxl
 import os
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-data_path = os.path.join(script_dir, "output", "output-record.xlsx")
-template_path = os.path.join(script_dir, "template", "EmployeeName_PersonalIncomeTaxComputation_YA2024.xlsx")
-template2_path = os.path.join(script_dir, "template", "EmployeeName_PersonalIncomeTaxComputation_YA2024_Non-resident.xlsx")
+data_path = os.path.join(script_dir, "./", "output-record.xlsx")
+template_path = os.path.join(script_dir, "template", "Name_Personal_ITC_YA2025_R.xlsx")
+template2_path = os.path.join(script_dir, "template", "Name_Personal_ITC_YA2025_NR.xlsx")
 data = openpyxl.load_workbook(data_path)
 data_sheet = data.active
+ 
+# Ensure output directory exists for generated tax computation files
+tax_comps_dir = os.path.join(script_dir, "tax_comps")
+os.makedirs(tax_comps_dir, exist_ok=True)
 
 
 
@@ -18,12 +22,12 @@ def generate_tax_comp():
             template_workbook = openpyxl.load_workbook(template_path)
             template_sheet = template_workbook["Tax Comp"]
             
-            template_sheet['C4'] = row_data[1]
-            template_sheet['C5'] = row_data[0]
-            template_sheet['E14'] = row_data[3]
-            template_sheet['E15'] = row_data[4]
-            template_sheet['E16'] = row_data[5]
-            template_sheet['E17'] = row_data[6]
+            template_sheet['C4'] = row_data[1] # Name
+            template_sheet['C5'] = row_data[0] # Tax Identification Number
+            template_sheet['E14'] = row_data[3] # Gross salary
+            template_sheet['E15'] = row_data[4] # Bonuses/director fees
+            template_sheet['E16'] = row_data[5] # Gross tips
+            template_sheet['E17'] = row_data[6] 
             template_sheet['E18'] = row_data[7]
             template_sheet['E19'] = row_data[8]
             template_sheet['E20'] = row_data[9]
@@ -35,7 +39,10 @@ def generate_tax_comp():
             template_sheet['E39'] = row_data[18] * -1 if row_data[18] else 0
             template_sheet['E42'] = row_data[17] * -1 if row_data[17] else 0
             
-            new_filepath = os.path.join(script_dir, "tax_comps", row_data[1] + "_PersonalIncomeTaxComputation_YA2024.xlsx")
+            name = row_data[1].replace(" ", "")
+            
+            new_file_name = name + "_Personal_ITC_YA2025.xlsx"
+            new_filepath = os.path.join(tax_comps_dir, new_file_name)
             template_workbook.save(new_filepath)
         else:
             template_workbook = openpyxl.load_workbook(template2_path)
@@ -57,7 +64,10 @@ def generate_tax_comp():
             template_sheet['E32'] = row_data[18] * -1 if row_data[18] else 0
             template_sheet['E35'] = row_data[17] * -1 if row_data[17] else 0
 
-            new_filepath = os.path.join(script_dir, "tax_comps", row_data[1] + "_PersonalIncomeTaxComputation_YA2024_Non-resident.xlsx")
+            name = row_data[1].replace(" ", "")
+            new_file_name = name + "_Personal_ITC_YA2025_Non-resident.xlsx"
+
+            new_filepath = os.path.join(tax_comps_dir, new_file_name)
             template_workbook.save(new_filepath)
 
 if __name__ == "__main__":
