@@ -67,22 +67,22 @@ def mass_convert_img_to_text(img_directory, text_directory):
                 print(f"Error processing {image_name}: {e}")
 
 # Not used
-def alternative_pdf_extraction_method():    
-    img = cv2.imread(single_img)
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# def alternative_pdf_extraction_method():    
+#     img = cv2.imread(single_img)
+#     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
-    text = image_to_string(gray, lang='eng')  # Specify language if necessary
+#     text = image_to_string(gray, lang='eng')  # Specify language if necessary
 
-    # Ensure the output directory exists
-    os.makedirs(os.path.dirname(output_text_file), exist_ok=True)
+#     # Ensure the output directory exists
+#     os.makedirs(os.path.dirname(output_text_file), exist_ok=True)
 
-    # Save extracted text to a file
-    with open(output_text_file, "w", encoding="utf-8") as file:
-        file.write(text)
+#     # Save extracted text to a file
+#     with open(output_text_file, "w", encoding="utf-8") as file:
+#         file.write(text)
 
-    print(f"Text has been saved to {output_text_file}")
+#     print(f"Text has been saved to {output_text_file}")
 
 if __name__ == "__main__":
-    mass_convert_pdf_to_img("dummy_pdf", "dummy_img")
+    mass_convert_pdf_to_img("docs", "dummy_img")
     mass_convert_img_to_text("dummy_img", "dummy_text")
     # matching.extract_text_to_excel("dummy_text")
